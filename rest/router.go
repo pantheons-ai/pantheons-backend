@@ -17,15 +17,15 @@ func RegisterHandlers(server *rest.Server, svcCtx *ServiceContext) {
 		},
 		{
 			Method: http.MethodPost,
-			Path: "/create-user",
-			Handler: CreateUserHandle(svcCtx),
+			Path: "/add-user-whitelist",
+			Handler: AddUserHandle(svcCtx),
 		},
+
 
 		{
 			Method: http.MethodPost,
 			Path: "/upload-files",
 			Handler: UploadFilesHandle(svcCtx),
 		},
-		
 	}, rest.WithPrefix(VersionPrefix),)
 }

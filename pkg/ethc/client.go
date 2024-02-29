@@ -13,19 +13,19 @@ import (
 	"github.com/pantheons-ai/pantheon/pkg/contract"
 )
 
-type ClientConfig struct {
+type Config struct {
 	RPCURL          string `json:"rpc_url"`
 	PrivateKey      string `json:"private_key"`
 }
 
 type Client struct {
-	config ClientConfig
+	config Config
 	client *ethclient.Client
 	privateKey *ecdsa.PrivateKey
 	pantheons map[string]*contract.Pantheon
 }
 
-func NewChainClient(c ClientConfig) (*Client, error) {
+func NewClient(c Config) (*Client, error) {
 	client, err := ethclient.Dial(c.RPCURL)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to connect to the Ethereum client: %v", err)

@@ -49,5 +49,5 @@ func (c *Client) GetContent(ctx context.Context, cidStr string) ([]byte, error) 
 func (c *Client) PutContent(ctx context.Context, content io.Reader) (string, error) {
 
 	c.client.Object().Put(ctx, content)
-
+	return "", nil
 }

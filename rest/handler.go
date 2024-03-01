@@ -51,3 +51,15 @@ func UploadFilesHandle(svc *ServiceContext) http.HandlerFunc {
 
 	}
 }
+
+func GetIPContents(svc *ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+	}
+}
+
+func GetUserContents(svc *ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+	}
+}

@@ -11,25 +11,27 @@ import (
 type Config struct {
 	rest.RestConf
 	ChainConfig ethc.Config
-	IPFSConfig ipfs.Config
+	IPFSConfig  ipfs.Config
 }
 
 type ServiceContext struct {
-	Config Config
+	Config      Config
 	ChainClient *ethc.Client
-	IpfsClient *ipfs.Client
+	IpfsClient  *ipfs.Client
 }
 
 func NewServiceContext(c Config) *ServiceContext {
 	chainClient, err := ethc.NewClient(c.ChainConfig)
 	if err != nil {
-		log.Fatalf("new client of chain error: %v", err)
+		log.Fatalf("new client for chain error: %v", err)
 	}
-
-	ipfsClient, err := ipfs.
-
+	ipfsClient, err := ipfs.NewClient(c.IPFSConfig)
+	if err != nil {
+		log.Fatalf("new client for ipfs error: %v", err)
+	}
 	return &ServiceContext{
-		Config:  c,
+		Config:      c,
+		IpfsClient:  ipfsClient,
 		ChainClient: chainClient,
 	}
 }

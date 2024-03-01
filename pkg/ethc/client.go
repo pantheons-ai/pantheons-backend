@@ -7,22 +7,23 @@ import (
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/pantheons-ai/pantheon/pkg/contract"
 )
 
 type Config struct {
-	RPCURL          string `json:"rpc_url"`
-	PrivateKey      string `json:"private_key"`
+	RPCURL     string `json:"rpc_url"`
+	PrivateKey string `json:"private_key"`
 }
 
 type Client struct {
-	config Config
-	client *ethclient.Client
+	config     Config
+	client     *ethclient.Client
 	privateKey *ecdsa.PrivateKey
-	pantheons map[string]*contract.Pantheon
+	pantheons  map[string]*contract.Pantheon
+	founders   map[string]common.Address
 }
 
 func NewClient(c Config) (*Client, error) {
@@ -50,16 +51,36 @@ func (c *Client) NewKeyedTransactor(ctx context.Context) (*bind.TransactOpts, er
 	return bind.NewKeyedTransactorWithChainID(c.privateKey, chainID)
 }
 
-func (c *Client) NewPantheon(address string) error {
-	if _, ok := c.pantheons[address]; ok {
+func (c *Client) NewPantheon(ipaddr string) error {
+	if _, ok := c.pantheons[ipaddr]; ok {
 		return nil
 	}
 
-	contractAddress := common.HexToAddress(address)
+	contractAddress := common.HexToAddress(ipaddr)
 	instance, err := contract.NewPantheon(contractAddress, c.client)
 	if err != nil {
 		return fmt.Errorf("Failed to create a instence of Pantheon contract: %v", err)
 	}
-	c.pantheons[address] = instance
+	c.pantheons[ipaddr] = instance
+	return nil
+}
+
+func (c *Client) AddUserToWhiteList(ipaddr, useraddr, cidStr string) error {
+	contract, ok := c.pantheons[ipaddr]
+	if !ok {
+		return fmt.Errorf("ip %s not exists in chain", ipaddr)
+	}
+	founder, ok := c.founders[ipaddr]
+	if !ok {
+		return fmt.Errorf("not find founder for ip %s", ipaddr)
+	}
+
+	opt := &bind.TransactOpts{From: founder}
+
+	userAddr := common.HexToAddress(useraddr)
+	_, err := contract.AddToWhitelist(opt, userAddr)
+	if err != nil {
+		return fmt.Errorf("add user %s to ip %s error: %v", useraddr, ipaddr)
+	}
 	return nil
 }

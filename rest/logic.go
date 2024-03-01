@@ -6,12 +6,11 @@ import (
 )
 
 type Logic struct {
-	ctx context.Context
+	ctx    context.Context
 	svcCtx *ServiceContext
 }
 
 func NewLogic(ctx context.Context, svcCtx *ServiceContext) *Logic {
-
 
 	return &Logic{}
 }
@@ -24,9 +23,7 @@ func (l *Logic) CreateIPUniversal(req *CreateIPReq) (string, error) {
 	}
 
 	// 2. create a folder to store all files of this IP
-	
-
-	
+	l.svcCtx.IpfsClient.PublishIP(l.ctx, req.Name)
 
 	return "", nil
 }

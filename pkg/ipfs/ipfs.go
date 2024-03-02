@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"path/filepath"
 
 	"github.com/ipfs/boxo/path"
 	cidx "github.com/ipfs/go-cid"
@@ -28,10 +29,17 @@ func NewClient(c Config) (*Client, error) {
 	return &Client{config: c, client: client}, nil
 }
 
-func (c *Client) PublishIP(ctx context.Context, ip string) error {
-	// c.client.Name().Publish()
-
-	return nil
+func (c *Client) PublishIP(ctx context.Context, ipAddr string) (string, error) {
+	folderPath := filepath.Join(c.config.GatewayURL, ipAddr)
+	ipPath, err := path.NewPath(folderPath)
+	if err != nil {
+		return "", fmt.Errorf("new path of ip %s error: %v", ipAddr, err)
+	}
+	ipnsName, err := c.client.Name().Publish(ctx, ipPath)
+	if err != nil {
+		return "", fmt.Errorf("publish ip %s to ipns error: %s", ipAddr, err)
+	}
+	return ipnsName.Cid().String(), nil
 }
 
 func (c *Client) GetContent(ctx context.Context, cidStr string) ([]byte, error) {
@@ -46,7 +54,7 @@ func (c *Client) GetContent(ctx context.Context, cidStr string) ([]byte, error) 
 	return reader.RawData(), nil
 }
 
-func (c *Client) PutContent(ctx context.Context, content io.Reader) (string, error) {
+func (c *Client) PutContent(ctx context.Context, filename string, content io.Reader) (string, error) {
 
 	c.client.Object().Put(ctx, content)
 	return "", nil

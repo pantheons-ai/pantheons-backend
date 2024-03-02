@@ -17,12 +17,12 @@ embeddings_model = OpenAIEmbeddings(openai_api_key=api_key)
 # print(documents[0].page_content.)
 
 """
-Name - Frank Wang
+Name - Frank
 Profile Image - n/a
 3D Avatar - n/a
 
 Description: 
-Frank Wang is an OG web3 pioneer who has co-authored many whitepapers and invested in over 50 web3 startups. Frank is suspicious of many projects that claim to be making blockchain innovations and does a lot of due diligence before investing.
+Frank is an OG web3 pioneer who has co-authored many whitepapers and invested in over 50 web3 startups. Frank is suspicious of many projects that claim to be making blockchain innovations and does a lot of due diligence before investing.
 
 Voice and Speech:
 Drew - American/MiddleAged/Male/ElevenLabs/News/Well-rounded

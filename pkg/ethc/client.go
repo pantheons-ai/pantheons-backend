@@ -65,7 +65,7 @@ func (c *Client) NewPantheon(ipaddr string) error {
 	return nil
 }
 
-func (c *Client) AddUserToWhiteList(ipaddr, useraddr, cidStr string) error {
+func (c *Client) AddUserToWhiteList(ipaddr, useraddr string) error {
 	contract, ok := c.pantheons[ipaddr]
 	if !ok {
 		return fmt.Errorf("ip %s not exists in chain", ipaddr)
@@ -81,6 +81,21 @@ func (c *Client) AddUserToWhiteList(ipaddr, useraddr, cidStr string) error {
 	_, err := contract.AddToWhitelist(opt, userAddr)
 	if err != nil {
 		return fmt.Errorf("add user %s to ip %s error: %v", useraddr, ipaddr)
+	}
+	return nil
+}
+
+func (c *Client) AddCID(ipaddr, useraddr, cid string) error {
+	contract, ok := c.pantheons[ipaddr]
+	if !ok {
+		return fmt.Errorf("ip %s not exists in chain", ipaddr)
+	}
+	opts := &bind.TransactOpts{NoSend: true}
+	ipAddr := common.HexToAddress(ipaddr)
+	userAddr := common.HexToAddress(useraddr)
+	_, err := contract.AddCIDs(opts, ipAddr.Big(), userAddr, []string{cid})
+	if err != nil {
+		return fmt.Errorf("add cid %s of user %s error: %v", cid, userAddr, err)
 	}
 	return nil
 }

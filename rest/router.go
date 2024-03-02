@@ -22,18 +22,18 @@ func RegisterHandlers(server *rest.Server, svcCtx *ServiceContext) {
 		},
 		{
 			Method:  http.MethodPost,
-			Path:    "/upload-files",
-			Handler: UploadFilesHandle(svcCtx),
+			Path:    "/push-content",
+			Handler: PublishContentHandle(svcCtx),
 		},
 		{
 			Method:  http.MethodPost,
 			Path:    "/ip-contents",
-			Handler: GetIPContents(svcCtx),
+			Handler: GetIPContentsHandle(svcCtx),
 		},
 		{
 			Method:  http.MethodGet,
 			Path:    "/user-contents",
-			Handler: GetUserContents(svcCtx),
+			Handler: GetUserContentsHandler(svcCtx),
 		},
 	}, rest.WithPrefix(VersionPrefix))
 }

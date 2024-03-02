@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "@story-protocol/core-sdk": "^0.0.1-beta-rc.9",
+    "add": "^2.0.6",
+    "process": "^0.11.10",
+    "process-env": "^2.0.2",
+    "viem": "^1.21.4"
+  },
+  "name": "storyprotocol",
+  "version": "1.0.0",
+  "description": "The commend line tool to register IP with StoryProtocol",
+  "main": "index.js",
+  "scripts": {
+    "test": "sptest.ts"
+  },
+  "author": "Enquan Chen",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.24"
+  }
+}

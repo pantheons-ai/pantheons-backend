@@ -8,3 +8,5 @@ Timeout: 0
 ChainConfig:
   RPCURL: ""
   PrivateKey: ""
+IpfsClient:
+  GatewayURL: ""

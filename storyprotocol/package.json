@@ -1,10 +1,8 @@
 {
   "dependencies": {
     "@story-protocol/core-sdk": "^0.0.1-beta-rc.9",
-    "add": "^2.0.6",
-    "process": "^0.11.10",
-    "process-env": "^2.0.2",
-    "viem": "^1.21.4"
+    "viem": "^1.21.4",
+    "ts-node": "^10.9.2"
   },
   "name": "storyprotocol",
   "version": "1.0.0",

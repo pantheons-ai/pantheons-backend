@@ -1,2 +1,2 @@
 # pantheons backend
-Service of fully-onchain IP infrastructure
+The Backend Service of Fully Onchain IP Infrastructure

@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@story-protocol/core-sdk": "^0.0.1-beta-rc.9",
-    "viem": "^1.21.4"
-  }
-}
